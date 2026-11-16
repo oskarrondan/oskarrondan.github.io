@@ -91,7 +91,7 @@ const OTHERS = [
 const FH='HV, Helvetica, Arial, sans-serif', FHC='HC, "Helvetica Condensed", Arial Narrow, sans-serif', FCR='CR, Courier, monospace', FFU='FU, Futura, sans-serif', FFK='FK, "Old English Text MT", serif';
 const SEGS = [
   {type:'intro',len:1.5,bg:'#0a14e0',fg:'#ffffff',ac:'#ffd400',title:'OSKAR RONDÁN',name:'INICIO',desc:'Carta de ajuste.'},
-  {fn:(s,u)=>drawAbout(s,u),len:2.6,bg:'#15171b',fg:'#f2efe8',ac:'#ffd400',font:{ser:FH},wipe:'crt',name:'SOBRE MÍ',title:'SOBRE MÍ',row:'Sobre mí',desc:'Quién soy y los programas que uso.'},
+  {fn:(s,u)=>drawAbout(s,u),len:2.6,notitle:1,bg:'#15171b',fg:'#f2efe8',ac:'#ffd400',font:{ser:FH},wipe:'crt',name:'SOBRE MÍ',title:'SOBRE MÍ',row:'Sobre mí',desc:'Quién soy y los programas que uso.'},
   {fn:(s,u)=>drawJac(s,u),len:5,bg:'#0b0a0a',fg:'#f4f1ea',ac:'#E3497B',ebg:'#E3497B',efg:'#0d0c0a',logo:'jac_logo_w',wipe:'flower',name:'JAC4RANDA  ·  DISEÑO DE IDENTIDAD',title:'JAC4RANDA',font:{ser:FH,mono:FH,big:FFK},row:'JAC4RANDA  ·  Diseño de identidad',desc:'Identidad para un grupo de música: la flor, el escudo y el logotipo.'},
   {fn:(s,u)=>drawWeb(s,u),len:3.4,sub:2,bg:'#0b0e11',fg:'#f4f1ea',ac:'#E3497B',logo:'jac_logo_w',name:'JAC4RANDA  ·  DISEÑO WEB',font:{ser:FH,mono:FH,big:FFK},row:'Diseño web',desc:'La web del grupo: una tienda dentro de un chat.'},
   {fn:(s,u)=>drawCamp(s,u),len:3.4,sub:3,bg:'#E3497B',fg:'#0d0c0a',ac:'#ffffff',logo:'jac_logo_k',name:'JAC4RANDA  ·  CAMPAÑA PUBLICITARIA',font:{ser:FH,mono:FH,big:FFK},row:'Campaña publicitaria',desc:'Un drop de mecheros anunciado como un anime.'},
@@ -371,6 +371,7 @@ function logoAt(seg,cx,cy,w,color,a=1){
 }
 const bigW=seg=>Math.min(W*.7,H*.4*logoAsp(seg));
 function mark(seg,color,a=1,dy=0){
+  if(seg.notitle) return;
   if(seg.part){ logoAt(seg,W/2,H*.46+dy,bigW(seg)*.72,color,a); g.globalAlpha=a; mono(seg.part,W/2,H*.46+dy+bigW(seg)*.72/logoAsp(seg)/2+H*.09,color||seg.cfg,'center',14); g.globalAlpha=1; return; }
   if(seg.logo||seg.vin) logoAt(seg,W/2,H/2+dy,bigW(seg),color,a); else bigTitle(seg.title,color,a,dy); }
 function logoHome(seg,u,x,y,w,color,a=1){ const k=sm((u-.015)/.09), wb=bigW(seg)*(seg.part?.72:1), y0=seg.part?H*.46:H/2, ww=lerp(wb,w,k); logoAt(seg,lerp(W/2,x+w/2,k),lerp(y0,y,k),ww,color,a);
@@ -406,7 +407,7 @@ function wipe(seg,k){
 function outro(seg,u,from=.91){
   const nx=SEGS[seg.k+1], e=sm((u-from)/(.985-from)); if(!nx||nx.sub||e<=0) return;
   g.fillStyle=rgba(seg.cbg,e); g.fillRect(0,0,W,H); mark(nx,seg.cfg,e,(1-e)*H*.12);
-  g.globalAlpha=e; mono('A CONTINUACIÓN  ·  SIGUE BAJANDO '+Math.round(cl((u-from)/(1-from))*100)+'%',W/2,H*.16,seg.cfg,'center'); g.globalAlpha=1;
+  if(nx.notitle) return; g.globalAlpha=e; mono('A CONTINUACIÓN  ·  SIGUE BAJANDO '+Math.round(cl((u-from)/(1-from))*100)+'%',W/2,H*.16,seg.cfg,'center'); g.globalAlpha=1;
 }
 const tag=(seg,s,a=1)=>{ g.globalAlpha=a; g.fillStyle=seg.cac; g.fillRect(W*.055,H*.27,10*S,10*S); mono(s,W*.055+18*S,H*.27+9*S,seg.cfg); g.globalAlpha=1; };
 const fill=c=>{ g.fillStyle=c; g.fillRect(0,0,W,H); };
