@@ -262,6 +262,7 @@ function tint(k,color){ const id=k+color; if(tints[id]) return tints[id]; const 
   x.drawImage(m,0,0); x.globalCompositeOperation='source-in'; x.fillStyle=color; x.fillRect(0,0,c.width,c.height); return tints[id]=c; }
 function hit(x,y,w,h,act,id){ hits.push({x,y,w,h,act,id}); return st.hover===id; }
 function hitAt(x,y){ for(let i=hits.length-1;i>=0;i--){ const r=hits[i]; if(x>=r.x&&x<=r.x+r.w&&y>=r.y&&y<=r.y+r.h) return r; } return null; }
+function openJac(){ const a=document.createElement('a'); a.href='https://jacaranda4r.com'; a.target='_blank'; a.rel='noopener'; document.body.appendChild(a); a.click(); a.remove(); }
 function mailMe(){ const u='mailto:oskar.rondan@gmail.com?subject='+encodeURIComponent('Hola Oskar — desde tu portfolio'); const a=document.createElement('a'); a.href=u; a.target='_blank'; a.rel='noopener'; document.body.appendChild(a); a.click(); a.remove(); }
 function button(label,x,y,id,act,fg,bg,align='left'){
   g.font=F(13*S,MONO,'500'); try{g.letterSpacing='2px'}catch(e){} const tw=g.measureText(label).width; try{g.letterSpacing='0px'}catch(e){}
@@ -716,7 +717,8 @@ function drawWeb(seg,u){
   tag(seg,'DISEÑO WEB',a);
   g.globalAlpha=a; para('Una tienda que no parece una tienda: el drop se vende dentro del chat del grupo.',pad,H*.36,W*.2,32*S,F(29*S,SER,'italic'),seg.cfg);
   JW.forEach((q,j)=>{ const y=H*.58+j*34*S, on=j===i; g.fillStyle=on?seg.cac:rgba(seg.cfg,.3); g.fillRect(pad,y-7*S,on?26*S:12*S,2);
-    txt(q[0],pad+(on?36:22)*S,y,F(20*S,SER,on?'italic':''),on?seg.cfg:rgba(seg.cfg,.45)); }); g.globalAlpha=1;
+    txt(q[0],pad+(on?36:22)*S,y,F(20*S,SER,on?'italic':''),on?seg.cfg:rgba(seg.cfg,.45)); });
+  if(a>.05) button('VISITAR JACARANDA4R.COM  ↗',pad,H*.58+JW.length*34*S+10*S,'jlink',openJac,seg.cfg,seg.cbg); g.globalAlpha=1;
   phone('jweb',pcx,pcy,ph,scr(tr<1?JW[Math.max(0,i-1)][2]:JW[i][2],tr<1?JW[i][2]:null,tr),{rest:-.22,cap:['LA WEB','Un chat de grupo: notificaciones, avatares que contestan y el perfil de cada integrante.'],fk:'jw_chat'});
   if(i===2){ const b=a; bubble('¿cuánto valen los mecheros?',null,pcx+pw*.95,pcy-ph*.2,true,en(f,.2,.12)*b); bubble('3,50 € el mechero','kgpy',pcx+pw*.32,pcy-ph*.03,false,en(f,.38,.12)*b); bubble('sin restock la vd','kgpy',pcx+pw*.32,pcy+ph*.1,false,en(f,.52,.12)*b); }
   const ta=a*cl(f/.12+(i===0?1:0))*(i<n-1?1-sm((f-.9)/.1):1), tx=W*.64;
@@ -1215,7 +1217,7 @@ function drawWebM(seg,u){
   fill('#E3497B'); g.fillStyle='#0b0e11'; g.beginPath(); g.arc(pcx,py0,Math.hypot(W,H)*1.02*o*(1-xo),0,7); g.fill();
   g.globalAlpha=a; const hg=g.createRadialGradient(pcx,py0,0,pcx,py0,ph*.8); hg.addColorStop(0,rgba('#E3497B',.28)); hg.addColorStop(1,rgba('#E3497B',0)); g.fillStyle=hg; g.fillRect(0,0,W,H); g.globalAlpha=1;
   const sp=cl((u-.1)/.76)*n, i=Math.min(n-1,Math.floor(sp)), f=sp>=n?1:sp-i, tr=i>0?cl(f/.16):1;
-  mtag(seg,'DISEÑO WEB',a); g.globalAlpha=a; msmall('TOCA EL MÓVIL',W-pad,H*.155+8.5*S,rgba(seg.cfg,.6),'right',9.5); g.globalAlpha=1;
+  mtag(seg,'DISEÑO WEB',a); g.globalAlpha=a; if(a>.05) button('JACARANDA4R.COM  ↗',W-pad,H*.155-12*S,'jlink',openJac,seg.cfg,seg.cbg,'right'); g.globalAlpha=1;
   phone('jweb',pcx,pcy,ph,scr(tr<1?JW[Math.max(0,i-1)][2]:JW[i][2],tr<1?JW[i][2]:null,tr),{rest:-.18,cap:['LA WEB','Un chat de grupo: notificaciones, avatares que contestan y el perfil de cada integrante.'],fk:'jw_chat'});
   if(i===2){ const b=a; bubble('¿cuánto valen los mecheros?',null,pcx+pw*.62,pcy-ph*.2,true,en(f,.2,.12)*b); bubble('3,50 € el mechero','kgpy',pcx-pw*.62,pcy-ph*.03,false,en(f,.38,.12)*b); bubble('sin restock la vd','kgpy',pcx-pw*.62,pcy+ph*.1,false,en(f,.52,.12)*b); }
   g.globalAlpha=a; JW.forEach((q,j)=>{ g.fillStyle=j===i?seg.cac:rgba(seg.cfg,.3); g.fillRect(pad+j*24*S,H*.675,j===i?18*S:10*S,2); }); g.globalAlpha=1;
